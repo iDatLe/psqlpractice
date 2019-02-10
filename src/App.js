@@ -1,28 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './scss/App.scss';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+
+function App() {
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  return (
+      <div className="app">
+        <form>
+          <input 
+            type="text"
+            name="username"
+            value={username}
+            placeholder="Username"
+            onChange={e => setUsername(e.target.value)} />
+
+          <input 
+            type="text"
+            name="password"
+            value={password}
+            placeholder="Password"
+            onChange={e => setPassword(e.target.value)} />
+
+          <input 
+            type="submit"/>
+        </form>
+
       </div>
-    );
-  }
+    )
 }
 
 export default App;
