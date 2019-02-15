@@ -12,6 +12,7 @@ const pool = new Pool ({
     password: password,
     port: 5432
 });
+// Pools will use environment variables for connection information
 
 
 /* GET ALL USERS */
@@ -47,7 +48,7 @@ router.get('/users/:id', (req, res) => {
 
 router.post('/users', (req, res) => {
     const { name, email } = req.body;
-    
+    console.log(req.params);
     pool.query('INSERT INTO users (name, email) VALUES ($1, $2)', [name, email], (error, results) => {
         if (error) {
             console.log(error);
@@ -60,15 +61,15 @@ router.post('/users', (req, res) => {
 /* PUT UPDATED DATA INTO EXISTING USER */
 
 router.put('/users/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const { name, email } = req.body;
+    // const id = parseInt(req.params.id);
+    const { name, email, prevName } = req.body;
 
-    pool.query('UPDATE users SET name = $1, email = $2 WHERE id = $3', [name, email, id], (error, results) => {
+    pool.query('UPDATE users SET name = $1, email = $2 WHERE name = $3', [name, email, prevName], (error, results) => {
         if (error) {
             console.log(error);
             throw error;
         }
-        res.status(200).send(`User modified with Id: ${id}`);
+        res.status(200).send(`User modified with new name: ${name}`);
     });
 });
 
